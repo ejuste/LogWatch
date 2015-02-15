@@ -47,7 +47,7 @@ namespace LogWatch.Tests {
             Assert.Equal(1, task.Result.Index);
         }
 
-        [Fact(Timeout = 30000)]
+        [Fact/*(Timeout = 30000)*/]
         public void LoadsRequestedRecords() {
             this.logSource
                 .Setup(x => x.ReadRecordAsync(It.IsAny<int>(), It.IsAny<CancellationToken>()))

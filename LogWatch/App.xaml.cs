@@ -31,7 +31,7 @@ namespace LogWatch {
                 var logFormats = formatSelector.SelectFormat(stream).ToArray();
 
                 if (logFormats.Length == 0)
-                    return new PlainTextLogFormat();
+                    return new OdisysLogFormat();
 
                 if (logFormats.Length == 1)
                     return logFormats[0].Value.Create(stream);
@@ -46,7 +46,7 @@ namespace LogWatch {
 
                 viewModel.Formats.Add(
                     new Lazy<ILogFormatFactory, ILogFormatMetadata>(
-                        () => new SimpleLogFormatFactory<PlainTextLogFormat>(),
+                        () => new SimpleLogFormatFactory<OdisysLogFormat>(),
                         new LogFormatFactoryAttribute("Plain text")));
 
                 return view.ShowDialog() != true ? null : viewModel.Format;

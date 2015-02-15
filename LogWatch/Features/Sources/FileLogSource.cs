@@ -158,7 +158,7 @@ namespace LogWatch.Features.Sources {
                 while (!cancellationToken.IsCancellationRequested) {
                     await statusChanged.WaitAsync(cancellationToken);
 
-                    for (; index < this.segments.Count; index++) {
+                    for (; index < this.segmentsCurrentIndex /*this.segments.Count*/; index++) {
                         cancellationToken.ThrowIfCancellationRequested();
 
                         var currentIndex = index;

@@ -188,7 +188,7 @@
     <Compile Include="Features\Sources\LogSourceFactoryAttribute.cs" />
     <Compile Include="Features\Formats\ILogFormatMetadata.cs" />
     <Compile Include="Features\Formats\LogFormatFactoryAttribute.cs" />
-    <Compile Include="Features\Formats\PlainTextLogFormat.cs" />
+    <Compile Include="Features\Formats\OdisysLogFormat.cs" />
     <Compile Include="LexCodeCompletionData.cs" />
     <Compile Include="Messages\RecordFilterChangedMessage.cs" />
     <Compile Include="Features\Sources\LogSourceInfo.cs" />

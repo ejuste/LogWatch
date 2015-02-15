@@ -118,11 +118,9 @@
             <Button
                 Command="{Binding GoToNextCommand}"
                 CommandParameter="{x:Static local:LogLevel.Fatal}"
+                Foreground="{StaticResource LogLevelFatal}"             
                 ToolTip="Go to next Fatal record">
-                <TextBlock
-                    Background="{StaticResource LogLevelFatal}"
-                    Foreground="Black"
-                    Text="{Binding FatalCount, StringFormat='{}{0:#,#}'}" />
+                <TextBlock Text="{Binding FatalCount, StringFormat='{}{0:#,#}'}" />
             </Button>
         </StackPanel>
     </Grid>

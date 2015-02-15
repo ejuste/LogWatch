@@ -6,24 +6,35 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace LogWatch.Features.Formats {
-    public class PlainTextLogFormat : ILogFormat {
-        public PlainTextLogFormat() {
+    public class OdisysLogFormat : ILogFormat {
+        public OdisysLogFormat() {
             this.Encoding = Encoding.GetEncoding("ISO-8859-1");
         }
 
-        public Encoding Encoding { get; set; }
+        public Encoding Encoding { get; private set; }
+
+        public string NewLine { get; set; }
 
         public Record DeserializeRecord(ArraySegment<byte> segment) {
             var line = this.Encoding.GetString(segment.Array, segment.Offset, segment.Count);
             try
             {
-                // 2015-01-12 14:21:00.584_892 [1] [OMS] (INFO) (c) 2001-2015 Ullink SAS. Order Management System. Release 3.7.2_00 (build 20141223163916) OFFICIAL
+                // 2015-01-12 14:21:00.584_892 [1] [OMS] (INFO) This is a message
                 string[] parts = line.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
                 var dateTimeStr = parts[0] + " " + parts[1].Split(new string[] { "_" }, StringSplitOptions.RemoveEmptyEntries)[0];
                 StringBuilder message = new StringBuilder();
                 for (int i = 5; i < parts.Length; i++)
                 {
-                    message.Append(parts[i]).Append(" ");
+                    var part = parts[i];
+                    if (i == parts.Length - 1)
+                    {
+                        part = part.Replace(NewLine, "");
+                    }
+                    message.Append(part);
+                    if (i != parts.Length - 1)
+                    {
+                        message.Append(" ");
+                    }
                 }
                 Record record = new Record
                 {
@@ -77,8 +88,9 @@ namespace LogWatch.Features.Formats {
             IObserver<RecordSegment> observer,
             Stream stream,
             CancellationToken cancellationToken) {
+                NewLine = DetectNewLine(stream);
             var offset = stream.Position;
-            var newLineBytesCount = this.Encoding.GetByteCount("\n");//Environment.NewLine);
+            var newLineBytesCount = this.Encoding.GetByteCount(NewLine);
 
             using (var reader = new StreamReader(stream, this.Encoding, false, 4096 * 12, true))
                 while (true) {
@@ -96,6 +108,37 @@ namespace LogWatch.Features.Formats {
 
                     offset += length;
                 }
+        }
+
+        private string DetectNewLine(Stream stream)
+        {
+            // Default is Linux/Unix
+            var newLine = "\n";
+            long initialPosition = stream.Position;
+            try
+            {
+                char prevChar = '\0';
+                for (int i = 0; i < 10000; i++)
+                {
+                    int b;
+                    if ((b = stream.ReadByte()) == -1) break;
+
+                    char curChar = (char)b;
+
+                    if (curChar == '\n')
+                    {
+                        // Only Windows and Linux/Unix
+                        newLine = prevChar == '\r' ? "\r\n" : "\n";
+                        break;
+                    }
+                    prevChar = curChar;
+                }
+            }
+            finally
+            {
+                stream.Position = initialPosition;
+            }
+            return newLine;
         }
 
         public bool CanRead(Stream stream) {

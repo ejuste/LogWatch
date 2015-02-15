@@ -5,3 +5,6 @@ LogWatch.Tests/obj
 packages
 *.suo
 *.user
+*.psess
+*.vsp
+*.dgml

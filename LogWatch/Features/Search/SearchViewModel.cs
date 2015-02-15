@@ -176,7 +176,8 @@ namespace LogWatch.Features.Search {
                 this.IsMatchLevel(record.Level) &&
                 (IsMatch(regex, record.Message) ||
                  IsMatch(regex, record.Exception) ||
-                 IsMatch(regex, record.Logger));
+                 IsMatch(regex, record.Logger) ||
+                 IsMatch(regex, record.Thread));
 
             this.MessengerInstance.Send(new RecordFilterChangedMessage(predicate));
         }

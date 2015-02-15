@@ -9,9 +9,10 @@
     xmlns:search="clr-namespace:LogWatch.Features.Search"
     xmlns:stats="clr-namespace:LogWatch.Features.Stats"
     xmlns:util="clr-namespace:LogWatch.Util"
-    Title="{Binding Source={x:Static local:App.SourceInfo}, Path=Name, StringFormat='{}{0} - Log Watch'}"
-    Width="800"
-    Height="450"
+    Title="{Binding Source={x:Static local:App.SourceInfo}, Path=Name, StringFormat='{}{0}'}"
+    Width="1280"
+    Height="800"
+    WindowStartupLocation="CenterScreen"
     ContentSource="Features\Records\RecordsView.xaml"
     Icon="App.ico"
     Style="{StaticResource CompactWindow}">
@@ -30,7 +31,7 @@
             FontFamily="Consolas"
             FontSize="22"
             FontWeight="Bold"
-            Text="lw" />
+            Text="olw" />
     </mui:ModernWindow.LogoData>
 
     <Window.DataContext>

@@ -298,6 +298,7 @@ namespace LogWatch.Features.Records {
                 existed.Timestamp = newRecord.Timestamp;
                 existed.Attributes = newRecord.Attributes;
                 existed.DisplayIndex = newRecord.DisplayIndex;
+                existed.Thread = newRecord.Thread;
                 existed.IsLoaded = true;
             }, this.CancellationToken,
                 TaskCreationOptions.None,

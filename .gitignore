@@ -1,0 +1,7 @@
+LogWatch/bin
+LogWatch/obj
+LogWatch.Tests/bin
+LogWatch.Tests/obj
+packages
+*.suo
+*.user

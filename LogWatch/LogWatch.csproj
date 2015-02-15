@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>LogWatch</RootNamespace>
     <AssemblyName>LogWatch</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -35,6 +35,7 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -65,10 +66,16 @@
     <ManifestKeyFile>LogWatch_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetZone>LocalIntranet</TargetZone>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>Properties\app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FirstFloor.ModernUI, Version=1.0.5.0, Culture=neutral, PublicKeyToken=2d21ec3cd074c59a, processorArchitecture=MSIL">
@@ -158,14 +165,6 @@
     <Compile Include="DialogService.cs" />
     <Compile Include="Features\Formats\ILogFormatFactory.cs" />
     <Compile Include="Features\Formats\IScanner.cs" />
-    <Compile Include="Features\Formats\LexLogFormatFactory.cs" />
-    <Compile Include="Features\Formats\LexPresetView.xaml.cs">
-      <DependentUpon>LexPresetView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Formats\LexPresetViewModel.cs" />
-    <Compile Include="Features\Formats\LexPresetsView.xaml.cs">
-      <DependentUpon>LexPresetsView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Features\Formats\ScanBase.cs" />
     <Compile Include="Features\Formats\SimpleLogFormatFactory.cs" />
     <Compile Include="Features\Formats\Tokens.cs" />
@@ -183,22 +182,13 @@
       <DependentUpon>SelectFormatView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Formats\SelectFormatViewModel.cs" />
-    <Compile Include="Features\Sources\SelectPortView.xaml.cs">
-      <DependentUpon>SelectPortView.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Features\Sources\SelectPortViewModel.cs" />
     <Compile Include="Features\Sources\FileLogSourceFactory.cs" />
     <Compile Include="Features\Sources\ILogSourceFactory.cs" />
     <Compile Include="Features\Sources\ILogSourceMetadata.cs" />
     <Compile Include="Features\Sources\LogSourceFactoryAttribute.cs" />
-    <Compile Include="Features\Sources\UdpLogSourceFactory.cs" />
     <Compile Include="Features\Formats\ILogFormatMetadata.cs" />
-    <Compile Include="Features\Formats\LexLogFormat.cs" />
     <Compile Include="Features\Formats\LogFormatFactoryAttribute.cs" />
     <Compile Include="Features\Formats\PlainTextLogFormat.cs" />
-    <Compile Include="Features\Formats\LexCompiler.cs" />
-    <Compile Include="Features\Formats\LexPreset.cs" />
-    <Compile Include="Features\Formats\LexPresetsViewModel.cs" />
     <Compile Include="LexCodeCompletionData.cs" />
     <Compile Include="Messages\RecordFilterChangedMessage.cs" />
     <Compile Include="Features\Sources\LogSourceInfo.cs" />
@@ -221,13 +211,11 @@
       <DependentUpon>SelectSourceView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Features\Sources\SelectSourceViewModel.cs" />
-    <Compile Include="Features\Formats\CsvLogFormat.cs" />
     <Compile Include="Features\Sources\ILogSource.cs" />
     <Compile Include="Util\DialogResultBehaviour.cs" />
     <Compile Include="Util\KmpUtil.cs" />
     <Compile Include="LogLevel.cs" />
     <Compile Include="Features\Sources\FileLogSource.cs" />
-    <Compile Include="Features\Formats\Log4JXmlLogFormat.cs" />
     <Compile Include="Features\Formats\AutoLogFormatSelector.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Record.cs" />
@@ -244,16 +232,7 @@
     <Compile Include="Features\Records\RecordsViewModel.cs" />
     <Compile Include="ShellViewModel.cs" />
     <Compile Include="Features\Sources\LogSourceStatus.cs" />
-    <Compile Include="Features\Sources\UdpLogSource.cs" />
     <Compile Include="Util\TextGeometry.cs" />
-    <Page Include="Features\Formats\LexPresetView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Features\Formats\LexPresetsView.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="Features\RecordDetails\RecordDetailsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -267,10 +246,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Features\Formats\SelectFormatView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Features\Sources\SelectPortView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -329,6 +304,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

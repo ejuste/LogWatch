@@ -69,12 +69,12 @@
                     <ContextMenu>
                         <MenuItem
                             Command="{Binding SetTimestampFormatCommand, Source={StaticResource ViewModel}}"
-                            CommandParameter="{x:Static feature:TimestampFormat.Short}"
-                            Header="Short" />
-                        <MenuItem
-                            Command="{Binding SetTimestampFormatCommand, Source={StaticResource ViewModel}}"
                             CommandParameter="{x:Static feature:TimestampFormat.Long}"
                             Header="Long" />
+                        <MenuItem
+                            Command="{Binding SetTimestampFormatCommand, Source={StaticResource ViewModel}}"
+                            CommandParameter="{x:Static feature:TimestampFormat.Short}"
+                            Header="Short" />
                     </ContextMenu>
                 </Setter.Value>
             </Setter>
@@ -120,7 +120,7 @@
                 <GridView AllowsColumnReorder="False">
                     <GridView.Columns>
                         <!--  #  -->
-                        <GridViewColumn Width="45" Header="#">
+                        <GridViewColumn Header="#" Width="45">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="local:Record">
                                     <TextBlock
@@ -132,12 +132,22 @@
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
 
-                        <!--  Level  -->
-                        <GridViewColumn Header="Level">
+                        <!--  Thread  -->
+                        <GridViewColumn Header="Thread">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="local:Record">
                                     <TextBlock
-                                        Width="45"
+                                        Style="{StaticResource RecordCellStyle}"
+                                        Text="{Binding Thread}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
+                        <!--  Level  -->
+                        <GridViewColumn Header="Level" Width="45">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate DataType="local:Record">
+                                    <TextBlock
                                         Style="{StaticResource RecordCellStyle}"
                                         Text="{Binding Level}" />
                                 </DataTemplate>
@@ -145,7 +155,7 @@
                         </GridViewColumn>
 
                         <!--  Timestamp  -->
-                        <GridViewColumn Header="Timestamp" HeaderContainerStyle="{StaticResource TimestampColumnHeader}">
+                        <GridViewColumn Header="Timestamp" HeaderContainerStyle="{StaticResource TimestampColumnHeader}" Width="170">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="local:Record">
                                     <Grid>
@@ -175,7 +185,7 @@
                         </GridViewColumn>
 
                         <!--  Logger  -->
-                        <GridViewColumn Header="Logger">
+                        <GridViewColumn Header="Logger" Width="125">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate DataType="local:Record">
                                     <TextBlock

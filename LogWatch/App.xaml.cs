@@ -108,7 +108,7 @@ namespace LogWatch {
         private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e) {
             DialogService.ErrorDialog(e.Exception.ToString());
 
-            if (e.Exception is ApplicationException)
+            //if (e.Exception is ApplicationException)
                 e.Handled = true;
         }
     }

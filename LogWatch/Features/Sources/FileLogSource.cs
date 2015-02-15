@@ -17,6 +17,7 @@ namespace LogWatch.Features.Sources {
         private readonly Lazy<Stream> recordsStream;
         private readonly SemaphoreSlim recordsStreamSemaphore = new SemaphoreSlim(1);
         private readonly ConcurrentDictionary<int, RecordSegment> segments;
+        private int segmentsCurrentIndex;
         private readonly Stream segmentsStream;
         private readonly ReplaySubject<LogSourceStatus> status = new ReplaySubject<LogSourceStatus>(1);
         private readonly CancellationTokenSource tokenSource = new CancellationTokenSource();
@@ -122,7 +123,7 @@ namespace LogWatch.Features.Sources {
         private async Task LoadSegmentsAsync(CancellationToken cancellationToken) {
             using (var observer = new Subject<RecordSegment>()) {
                 observer.Subscribe(segment => {
-                    var index = this.segments.Count;
+                    var index = Interlocked.Increment(ref this.segmentsCurrentIndex);  //this.segments.Count;
 
                     if (this.segments.TryAdd(index, segment)) {
                         var length = this.streamLength;
